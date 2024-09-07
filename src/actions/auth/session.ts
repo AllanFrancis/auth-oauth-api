@@ -1,9 +1,11 @@
 import 'server-only';
 
+import { SessionPayload } from '@/schemas/authSchemas';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { SessionPayload } from '@/schemas/authSchemas';
+
+import { apiRefreshToken } from '@/api/auth';
 
 const secretKey = process.env.SECRET;
 const key = new TextEncoder().encode(secretKey);
@@ -27,8 +29,12 @@ export async function decrypt(session: string | undefined = '') {
   }
 }
 
-export async function createSession(userId: string) {
-  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+export async function createSession(refreshToken: string) {
+  const user = await apiRefreshToken(refreshToken);
+  console.log(user);
+  const userId = user.id;
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
   const session = await encrypt({ userId, expiresAt });
 
   cookies().set('session', session, {

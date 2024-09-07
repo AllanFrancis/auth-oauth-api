@@ -13,13 +13,12 @@ export const useAuthGoogle = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    const refreshToken = urlParams.get('refreshToken');
+    const refreshToken = urlParams.get('ref');
+    createSession(refreshToken || '');
 
-    if (token && refreshToken) {
-      localStorage.setItem('token', token);
+    if (refreshToken) {
       localStorage.setItem('refreshToken', refreshToken);
-      window.location.href = "http://localhost:3000/app";
+      window.location.href = "http://localhost:3000/dashboard";
     }
   }, []);
 

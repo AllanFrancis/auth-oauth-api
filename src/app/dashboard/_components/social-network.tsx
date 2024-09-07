@@ -53,7 +53,7 @@ export default function SocialNetworkPage() {
           </SheetContent>
         </Sheet>
         <div className="flex-1">
-          <h1 className="text-lg font-semibold">Rede Social</h1>
+          <h1 className="text-lg font-semibold">Tatame-PRO</h1>
         </div>
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon">
