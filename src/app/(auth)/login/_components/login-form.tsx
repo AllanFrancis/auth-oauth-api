@@ -7,10 +7,14 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 import { login } from '../_actions/login';
-import CardWrapper from '../../_components/card-wrapper';
+import CardWrapper from '@/components/auth/card-wrapper';
+import { Separator } from '@/components/ui/separator';
+import { useState } from 'react';
+import { useAuthGoogle } from '@/hooks/use-auth-google';
 
 export function LoginForm() {
   const [state, action] = useFormState(login, undefined);
+  const { isLoading, loginWithGoogle } = useAuthGoogle();
 
   return (
     <CardWrapper
@@ -18,6 +22,8 @@ export function LoginForm() {
       backButtonLabel="Não tem uma conta?"
       backButtonHref="/signup"
     >
+      <div className='flex flex-col space-y-4'>
+      
     <form action={action} className="space-y-4">
         <div className='space-y-2'>
           <Label htmlFor="email">E-mail</Label>
@@ -52,8 +58,13 @@ export function LoginForm() {
           <p className="text-sm text-red-500">{state.message}</p>
         )}
         <LoginButton />
-
+        
     </form>
+    <Separator/>
+    <Button onClick={loginWithGoogle} disabled={isLoading}>
+      {isLoading ? 'Carregando...' : 'Entrar com Google'}
+    </Button>
+    </div>
     </CardWrapper>
   );
 }

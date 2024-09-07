@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useFormState, useFormStatus } from 'react-dom';
 import { signup } from '../_actions/signup';
-import CardWrapper from '../../_components/card-wrapper';
+import CardWrapper from '@/components/auth/card-wrapper';
 
 export function SignupForm() {
   const [state, action] = useFormState(signup, undefined);
